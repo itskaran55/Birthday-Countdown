@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday CountDown</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+        *
+        {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        body
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #463E50;
+            position: relative;
+        }
+        body::after
+        {
+            content: "";
+            position: absolute;
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            background: linear-gradient(rgba(156, 48, 19, 0.6),rgba(138, 17, 186, 0.305));
+            border: 1px solid black;
+            top: 15%;
+            left: 15%;
+            animation: rotate 1s infinite;
+        }
+        body::before
+        {
+            content: "";
+            position: absolute;
+            height: 150px;
+            width: 150px;
+            border: 1px solid black;
+            border-radius: 50%;
+            background: linear-gradient(rgba(156, 48, 19, 0.6),rgba(138, 17, 186, 0.305));
+            bottom: 6%;
+            right: 15%;
+            animation: rotate 1s infinite;
+        }
+        @keyframes rotate{
+            0%{
+                transform: rotate(0deg);
+                /* right: 30%; */
+                /* transform: translate(20%, 30%, 40%, 50%); */
+            }
+            50%{
+                /* bottom: 23%; */
+                /* transform: translate(-50%, -30%, -40%, -50%); */
+                transform: rotate(180deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+        .box
+        {
+            width: 1000px;
+            height: 450px;
+            border: 2px groove black;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 40px;
+            background-color: rgba(0, 0, 0, 0.205);
+            transition: 0.5s ease;
+            z-index: 1;
+        }
+        .box:hover {
+            outline: none; /* Remove focus outline */
+            border-color: #007bff; /* Border color when focused */
+            backdrop-filter: blur(10px);
+        }
+        .cntd
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 30vh;
+            position: absolute;
+        }
+        .cntd input
+        {
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            font-size: 3em;
+            text-align: center;
+        }
+        .cntd .days,.hours,.minutes,.seconds
+        {
+            display: flex;
+            flex-direction: column;
+            margin: 10px 15px;
+        }
+        .cntd span
+        {
+            margin-left: 70px;
+            color: #fffefe;
+        }
+        .cntd input {
+            border: 2px solid #ccc; /* Initial border style */
+            transition: border-color 0.5s ease; /* Smooth transition for border color changes */
+        }
+
+        .cntd input:hover {
+            outline: none; /* Remove focus outline */
+            border: 2px double black; /* Border color when focused */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin: 10px; color: #fffefe;">My Birthday</h1>
+        <div class="box">
+            <div class="cntd">
+                <div class="days">
+                    <input type="text">
+                    <br>
+                    <span>Days</span>
+                </div>
+                <div class="hours">
+                    <input type="text">
+                    <br>
+                    <span>Hours</span>
+                </div>
+                <div class="minutes">
+                    <input type="text">
+                    <br>
+                    <span>Minutes</span>
+                </div>
+                <div class="seconds">
+                    <input type="text">
+                    <br>
+                    <span>Seconds</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const birthDate = prompt("Enter your BirthDate");
+        const inputs = document.querySelectorAll("input");
+        const CountDown = () =>
+        {
+            const end = new Date(birthDate);
+            const now = new Date();
+
+            const diff = Math.floor((end - now)/1000);
+            console.log(diff);
+
+            // Days
+            inputs[0].value = Math.floor(diff / 86400); //seconds divide by 24 hours
+
+            //Hours
+            inputs[1].value = Math.floor((diff % 86400) / 3600); //seconds divide by 1 hours
+
+            //Minutes
+            inputs[2].value = Math.floor((diff % 3600) / 60); //seconds divide by 1 minute
+
+            //seconds
+            inputs[3].value = Math.floor(diff % 60); 
+        }
+        //Update CountDown
+        const updateCountdown = setInterval(CountDown,1000);
+
+        CountDown();
+    </script>
+</body>
+</html>
